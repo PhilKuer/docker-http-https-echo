@@ -28,7 +28,7 @@ fi
 
 
 message " Build image "
-docker build -t mendhak/http-https-echo:latest .
+docker build -t philkuer/http-https-echo:latest .
 
 mkdir -p testarea
 pushd testarea
@@ -37,7 +37,7 @@ message " Cleaning up from previous test run "
 docker ps -q --filter "name=http-echo-tests" | grep -q . && docker stop http-echo-tests
 
 message " Start container normally "
-docker run -d --rm --name http-echo-tests -p 8080:8080 -p 8443:8443 -t mendhak/http-https-echo
+docker run -d --rm --name http-echo-tests -p 8080:8080 -p 8443:8443 -t philkuer/http-https-echo
 sleep 5
 
 
@@ -109,7 +109,7 @@ message " Stop containers "
 docker stop http-echo-tests
 
 message " Start container with different internal ports "
-docker run -d --rm -e HTTP_PORT=8888 -e HTTPS_PORT=9999 --name http-echo-tests -p 8080:8888 -p 8443:9999 -t mendhak/http-https-echo
+docker run -d --rm -e HTTP_PORT=8888 -e HTTPS_PORT=9999 --name http-echo-tests -p 8080:8888 -p 8443:9999 -t philkuer/http-https-echo
 sleep 5
 
 message " Make http(s) request, and test the path, method and header. "
@@ -143,7 +143,7 @@ docker stop http-echo-tests
 
 
 message " Start container with JWT_HEADER "
-docker run -d --rm -e JWT_HEADER=Authentication --name http-echo-tests -p 8080:8080 -p 8443:8443 -t mendhak/http-https-echo
+docker run -d --rm -e JWT_HEADER=Authentication --name http-echo-tests -p 8080:8080 -p 8443:8443 -t philkuer/http-https-echo
 sleep 5
 
 REQUEST=$(curl -s -k -H "Authentication: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" https://localhost:8443/ )
@@ -163,7 +163,7 @@ docker stop http-echo-tests
 
 
 message " Start container with LOG_IGNORE_PATH "
-docker run -d --rm -e LOG_IGNORE_PATH=/ping --name http-echo-tests -p 8080:8080 -p 8443:8443 -t mendhak/http-https-echo
+docker run -d --rm -e LOG_IGNORE_PATH=/ping --name http-echo-tests -p 8080:8080 -p 8443:8443 -t philkuer/http-https-echo
 sleep 5
 curl -s -k -X POST -d "banana" https://localhost:8443/ping > /dev/null
 
@@ -182,7 +182,7 @@ message " Stop containers "
 docker stop http-echo-tests
 
 message " Start container with LOG_WITHOUT_NEWLINE "
-docker run -d --rm -e LOG_WITHOUT_NEWLINE=1 --name http-echo-tests -p 8080:8080 -p 8443:8443 -t mendhak/http-https-echo
+docker run -d --rm -e LOG_WITHOUT_NEWLINE=1 --name http-echo-tests -p 8080:8080 -p 8443:8443 -t philkuer/http-https-echo
 sleep 5
 curl -s -k -X POST -d "tiramisu" https://localhost:8443/ > /dev/null
 
@@ -201,7 +201,7 @@ message " Stop containers "
 docker stop http-echo-tests
 
 message " Check that container is running as a NON ROOT USER by default"
-docker run -d --name http-echo-tests --rm mendhak/http-https-echo
+docker run -d --name http-echo-tests --rm philkuer/http-https-echo
 
 WHOAMI=$(docker exec http-echo-tests whoami)
 
