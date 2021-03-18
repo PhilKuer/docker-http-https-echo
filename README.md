@@ -10,7 +10,9 @@ You can use your own certificates, choose your ports, decode JWT headers and fil
 
 ![browser](https://raw.githubusercontent.com/philkuer/docker-http-https-echo/master/screenshots/screenshot.png)
 
-This image is executed as non root by default and is fully compliant with Kubernetes or Openshift deployment.
+This image is executed as non root by default and is fully compliant with Kubernetes.
+
+**This image is using the recommended UID ground `0` to be fully Openshift compliant.**
 
 Please do not use the `:latest` tag as it will break without warning, use a specific version instead.
 
