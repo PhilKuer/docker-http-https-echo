@@ -14,7 +14,8 @@ RUN set -ex \
   # Delete unnecessary files
   && rm package* generate-cert.sh \
   # Correct User's file access
-  && chown -R node:node /app
+  && chgrp -R 0 /app \ 
+  && chmod -R g=u /app
 
 FROM node:14-alpine AS final
 WORKDIR /app
