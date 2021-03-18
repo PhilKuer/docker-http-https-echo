@@ -23,7 +23,7 @@ jobs:
       - name: Scan the image
         uses: anchore/scan-action@v2
         with:
-          image: "mendhak/http-https-echo:latest"
+          image: "philkuer/http-https-echo:latest"
           debug: false
 
 
